@@ -5,7 +5,7 @@
 <div class="card mt-2 bg-light">
     <div class="card-body shadow shadow-sm">
 
-        <a type="button" href="<?= base_url('buat_permainan'); ?>" class="btn btn-primary btn-sm">Buat Permainan</a>
+        <a type="button" href="<?= base_url('login'); ?>" class="btn btn-primary btn-sm">Buat Permainan</a>
 
         <div class="row">
             <div class="col-md-8">
