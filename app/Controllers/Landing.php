@@ -6,7 +6,7 @@ class Landing extends BaseController
 {
     public function index(): string
     {
-        return view('landing', ['judul' => 'Jiwa']);
+        return view('landing', ['judul' => 'PPG Daljab 2023']);
     }
     public function login(): string
     {
