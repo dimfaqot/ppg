@@ -11,6 +11,7 @@ use CodeIgniter\Router\RouteCollection;
 //  landing
 $routes->get('/', 'Landing::index');
 $routes->get('/asesmen', 'Landing::asesmen');
+$routes->post('/get_soal_asesmen', 'Landing::get_soal_asesmen');
 $routes->post('/suara_partai', 'Landing::suara_partai');
 $routes->get('/login', 'Landing::login');
 $routes->get('/logout', 'Landing::logout');

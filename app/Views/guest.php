@@ -151,8 +151,35 @@
             $('.gagal').fadeIn();
         }
 
-        const countdown = (max = 5) => {
+        let index = 0;
+        const countdown_asesmen = (max = 2) => {
+
             var timeleft = max;
+
+            var downloadTimer = setInterval(function() {
+                if (timeleft >= 0) {
+                    let html = '';
+                    html += '<div class="d-flex justify-content-center">';
+                    html += '<div style="text-align: center;font-size:xx-large;border-radius:50%;padding:4px; border: 1px solid black;width:60px;height:60px;">' + timeleft + '</div>';
+                    html += '</div>';
+                    html += '<div class="d-flex justify-content-center">';
+                    html += 'Sisa waktu...';
+                    html += '</div>';
+
+                    $(".countdown").html(html);
+                    // document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+                }
+                timeleft -= 1;
+            }, 1000);
+
+
+
+        }
+
+        const countdown = (max = 5) => {
+
+            var timeleft = max;
+
             var downloadTimer = setInterval(function() {
                 if (timeleft >= 0) {
                     let html = '';
@@ -162,11 +189,6 @@
                     html += '<div class="d-flex justify-content-center">';
                     <?php if (url() == 'permainan') : ?>
                         html += 'Menunggu Teman Bermain...';
-
-                    <?php endif; ?>
-                    <?php if (url() == 'asesmen') : ?>
-                        html += 'Sisa waktu...';
-
                     <?php endif; ?>
                     html += '</div>';
 
@@ -181,12 +203,8 @@
                             html += '<div class="d-flex justify-content-center">';
                             html += 'Permainan dimulai...';
                             html += '</div>';
-
                             $(".countdown").html(html);
                         <?php endif; ?>
-                    <?php endif; ?>
-                    <?php if (url() == 'asesmen') : ?>
-                        location.reload();
                     <?php endif; ?>
 
                 }
@@ -194,15 +212,60 @@
             }, 1000);
 
 
+
         }
 
 
+
+        const get_soal_asesmen = (index) => {
+            post('get_soal_asesmen', {
+                    index
+                })
+                .then(res => {
+                    if (res.status == '200') {
+                        countdown_asesmen(15);
+                        let html = '';
+                        let fz = 28;
+                        if (index > 4) {
+                            fz = 18;
+                        }
+                        html += '<div style="text-align: justify;font-size:' + fz + 'px;">' + res.data.soal + '</div>';
+                        html += '<div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">a. ' + res.data.a + '</div>';
+                        html += '<div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">b. ' + res.data.b + '</div>';
+                        html += '<div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">c. ' + res.data.c + '</div>';
+                        html += '<div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">d. ' + res.data.d + '</div>';
+                        html += '<div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">e. ' + res.data.e + '</div>';
+                        $('.body_asesmen').html(html);
+
+                    } else {
+                        gagal(res.message);
+                    }
+
+                })
+
+        }
 
         <?php if (url() == 'permainan' && $kode == 1) : ?>
             countdown();
         <?php endif; ?>
         <?php if (url() == 'asesmen') : ?>
-            countdown(15);
+            get_soal_asesmen(0);
+
+            setInterval(() => {
+                index++;
+                if (index >= 10) {
+                    let html = '';
+                    html += '<div style="text-align: justify;font-size:80px;">Terima Kasih</div>';
+                    $('.body_asesmen').html(html);
+                    $(".countdown").hide();
+                    return false;
+                } else if (index <= 10) {
+                    get_soal_asesmen(index);
+
+                }
+
+            }, 15000);
+
         <?php endif; ?>
 
         $(document).on('click', '.add_player', function(e) {
@@ -313,6 +376,8 @@
 
 
         }
+
+
 
 
 

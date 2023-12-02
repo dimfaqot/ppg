@@ -11,12 +11,8 @@
         </div>
     </div>
 
-    <div class="container mb-5">
-        <h1 style="text-align: justify;"><?= $data['soal']; ?></h1>
-        <div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">a. <?= $data['a']; ?></div>
-        <div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">b. <?= $data['b']; ?></div>
-        <div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">c. <?= $data['c']; ?></div>
-        <div class="bg_grey border_radius p-2 mt-3" style="font-size:x-large;color:black;font-weight:bold">d. <?= $data['d']; ?></div>
+    <div class="mb-5 body_asesmen px-5 py-2">
+
 
     </div>
 </div>

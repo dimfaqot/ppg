@@ -15,11 +15,25 @@ class Landing extends BaseController
     }
     public function asesmen()
     {
-        $ran = rand(1, 26);
+
+        return view('asesmen', ['judul' => 'Asesmen']);
+    }
+    public function get_soal_asesmen()
+    {
+        $index = $this->request->getVar('index');
 
         $db = db('soal');
-        $q = $db->where('id', $ran)->get()->getRowArray();
-        return view('asesmen', ['judul' => 'Asesmen', 'data' => $q]);
+        $q = $db->where('kategori', 'Asesmen')->orderBy('id', 'ASC')->get()->getResultArray();
+
+        $data = [];
+
+        foreach ($q as $k => $i) {
+            if ($k == $index) {
+                $data = $i;
+            }
+        }
+
+        sukses_js('Ok', $data);
     }
     public function auth()
     {
